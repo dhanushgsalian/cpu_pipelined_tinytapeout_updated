@@ -2,19 +2,18 @@ module pipelined_risc_v_cpu  #(
 	parameter 	DATA_WIDTH = 32,
 				ADD_WIDTH=7,
 				REGADD=5,
-				IMM_DATA_WIDTH=20,
 				WIDTH = 8
 	)(
 	input clk,rst,
 	input pmWrEn,//write enable signal for program memory 
 	input [7:0]instructionIn,
-	input [ADDWIDTH-1:0]pm_addr,
+	input [ADD_WIDTH-1:0]pm_addr,
 	output [7:0]alu_result);
 	
 	wire [DATA_WIDTH-1:0]instruction;
 	wire [ADD_WIDTH-1:0]pointer;
 	
-	wire [3:0] current_ins_add_w;
+	//wire [3:0] current_ins_add_w;
   //program memory
 	wire [31:0] instruction_w;
   //fetch stage
@@ -54,17 +53,17 @@ module pipelined_risc_v_cpu  #(
 	wire [WIDTH-1:0] mux_out_op1;
 	wire [WIDTH-1:0] mux_out_op2;
   
-	wire regWrEn,regWrEn_ff3;
-	wire [REGADD-1:0]readAdd1,readAdd2,writeAdd,writeAdd_ff2;
-	wire [IMM_DATA_WIDTH-1:0]immData;
-	wire isLoad;
+	//wire regWrEn;
+	//wire [REGADD-1:0]readAdd1,readAdd2,writeAdd,writeAdd_ff2;
+	//wire [IMM_DATA_WIDTH-1:0]immData;
+	//wire isLoad;
 	wire [2:0]opcodeAlu;
-	wire [DATAWIDTH-1:0]data1,data2;
-	wire [DATAWIDTH-1:0]muxOut;
-	wire [DATAWIDTH-1:0]aluresult_ff1;
+	//wire [DATA_WIDTH-1:0]data1,data2;
+	wire [DATA_WIDTH-1:0]muxOut;
+	//wire [DATA_WIDTH-1:0]aluresult_ff1;
 	
 	
-	program_memory #(.DATA_WIDTH=8, .ADD_WIDTH=7)
+	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
 	program_memory_inst1(.clk(clk),
 						 .wrEn(pmWrEn),
 						 .readAdd(pointer),
@@ -91,7 +90,7 @@ module pipelined_risc_v_cpu  #(
 					  .func3(next_ins_w[14:12]), 
 					  .func7(next_ins_w[31:25]), 
 					  .opcode(next_ins_w[6:0]), 
-			  		  .immediate_data(instruction_w[28:20]), 
+					  .immediate_data(instruction_w[31:24]), 
 					  .r_reg1_out(r_reg1_out), 
 					  .r_reg2_out(r_reg2_out), 
 					  .wr_reg_out(wr_reg_dec_w), 
@@ -109,7 +108,7 @@ module pipelined_risc_v_cpu  #(
 					  .alu_op(alu_op_w));
 
 
-	register_bank #(.DEPTH(32), .WIDTH(8), .ADD_WIDTH(5)) 
+	reg_bank #(.DEPTH(32), .WIDTH(8), .ADD_WIDTH(5)) 
 	reg_bank_inst(.clk(clk), 
 				  .w_en(reg_wen_wb_w),
 				  .r_reg1(r_reg1_out),
@@ -154,7 +153,7 @@ module pipelined_risc_v_cpu  #(
   
 	writeback_stage #(.WIDTH(8)) 
 	writeback_stage_inst(.clk(clk),
-						 .reg_wen(reg_wen_w),
+			     .reg_wen(reg_wen_w),
 						 .wr_reg(wr_reg_dec_w),
 						 .alu_result(alu_result_w),
 						 .reg_wen_out(reg_wen_wb_w),
