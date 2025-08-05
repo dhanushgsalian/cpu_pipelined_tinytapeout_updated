@@ -1,4 +1,4 @@
-module reg_bank #(parameter DEPTH = 15, WIDTH = 8, ADD_WIDTH = 5) (clk, w_en, r_reg1, r_reg2, w_reg, w_data, read_data1, read_data2); //This implements the 16 32-bit registers and read and write to register only seven reigiters are used remaining dedicated to future use
+module register_bank #(parameter DEPTH = 15, WIDTH = 8, ADD_WIDTH = 5) (clk, w_en, r_reg1, r_reg2, w_reg, w_data, read_data1, read_data2); //This implements the 16 32-bit registers and read and write to register only seven reigiters are used remaining dedicated to future use
   input clk;
   input w_en;
   input [ADD_WIDTH - 1:0] r_reg1;
