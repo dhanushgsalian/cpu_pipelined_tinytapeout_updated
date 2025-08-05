@@ -1,8 +1,8 @@
-module alu #(parameter WIDTH = 7,OP_WIDTH = 3) (alu_op, op1, op2, out);
+module alu #(parameter WIDTH = 8,OP_WIDTH = 3) (alu_op, op1, op2, out);
   input [OP_WIDTH - 1:0] alu_op;      // 8-bit opcode that determines the operation
   input [WIDTH - 1:0] op1;            // First operand
   input [WIDTH - 1:0] op2;            // Second operand
-  output reg [WIDTH:0] out = {8{1'b0}};       // Output result
+  output reg [WIDTH:0] out = {9{1'b0}};       // Output result
 
   always @(alu_op, op1, op2) begin
     case(alu_op)
