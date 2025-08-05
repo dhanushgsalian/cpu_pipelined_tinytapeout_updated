@@ -30,14 +30,12 @@ async def test_project(dut):
         (0b1000_0000, 0b1001_0011), (0b1000_0001, 0b0000_0000),
         (0b1000_0010, 0b1000_0000), (0b1000_0011, 0b0000_0000),
 
-        (0b1000_0100, 0b0001_0011), (0b1000_0101, 0b0010_0001),
-        (0b1000_0110, 0b0000_0010), (0b1000_0111, 0b0000_0000),
+        (0b1000_0100, 0b0001_0011), (0b1000_0101, 0b0000_0001),
+        (0b1000_0110, 0b1100_0000), (0b1000_0111, 0b0000_0000),
 
-        (0b1000_1000, 0b0), (0b1000_1001, 0b0),
-        (0b1000_1010, 0b0), (0b1000_1011, 0b0),
+        (0b1000_1000, 0b1011_0011), (0b1000_1001, 0b1000_0001),
+        (0b1000_1010, 0b0010_0000), (0b1000_1011, 0b0000_0000),
 
-        (0b1000_1100, 0b1011_0011), (0b1000_1101, 0b0000_0001),
-        (0b1000_1110, 0b0001_0001), (0b1000_1111, 0b0000_0000)
     ]
 
     for addr, instr in instructions:
@@ -53,10 +51,10 @@ async def test_project(dut):
     dut._log.info("Start execution")
 
     # Wait 1-3 cycles for execution
-    await ClockCycles(dut.clk, 5)
+    await ClockCycles(dut.clk, 4)
 
     # Check the output (should be sum of R1 and R2)
-    expected_output = 37  # Since R1 = 3, R2 = 34  → R3 = R1 + R2 = 37
+    expected_output = 20  # Since R1 = 8, R2 = 12  → R3 = R1 + R2 = 20
     assert dut.uo_out.value == expected_output, f"Test failed:  Expected {expected_output}, got {dut.uo_out.value}"
 
     dut._log.info(f"Test passed: Output {dut.uo_out.value.integer}")
