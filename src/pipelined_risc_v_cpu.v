@@ -125,26 +125,26 @@ module pipelined_risc_v_cpu  #(
 					  .op1_select(op1_select), 
 					  .op2_select(op2_select));
 		
-	mux_2_1 #(.WIDTH(8)) 
+	mux_2_1 #(.WIDTH(7)) 
 	op1_select_inst(.i0(read_data1_w), 
 					.i1(alu_result_wb_w[7:0]),
 					.sel(op1_select), 
 					.mux_out(mux_out_op1));
 	 
-	mux_2_1 #(.WIDTH(8)) 
+	mux_2_1 #(.WIDTH(7)) 
 	op2_select_inst (.i0(read_data2_w), 
 					 .i1(alu_result_wb_w[7:0]),
 					 .sel(op2_select),
 					 .mux_out(mux_out_op2));
 	 
-	mux_2_1 #(.WIDTH(8)) 
+	mux_2_1 #(.WIDTH(7)) 
 	data_store_sel_mux(.i0(mux_out_op2),
 					   .i1(immediate_data_dec_w),
 					   .sel(data_imm_sel_w),
 					   .mux_out(mux_out_w));
 				  
 				  
-	alu #(.WIDTH(8), .OP_WIDTH(3)) 
+	alu #(.WIDTH(7), .OP_WIDTH(3)) 
 	alu_inst(.alu_op(alu_op_w),
 			 .op1(mux_out_op1),
 			 .op2(mux_out_w),
