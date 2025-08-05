@@ -10,12 +10,10 @@ module pipelined_risc_v_cpu  #(
 	input [ADD_WIDTH-1:0]pm_addr,
 	output [7:0]alu_result);
 	
-	wire [DATA_WIDTH-1:0]instruction;
-	wire [ADD_WIDTH-1:0]pointer;
-	
-	//wire [3:0] current_ins_add_w;
+	wire [ADD_WIDTH-1:0]pointer;	
+
   //program memory
-	wire [31:0] instruction_w;
+	wire [31:0] instruction;
   //fetch stage
 	wire [31:0] next_ins_w;
   //control unit
@@ -53,17 +51,14 @@ module pipelined_risc_v_cpu  #(
 	wire [WIDTH-1:0] mux_out_op1;
 	wire [WIDTH-1:0] mux_out_op2;
   
-	//wire regWrEn;
-	//wire [REGADD-1:0]readAdd1,readAdd2,writeAdd,writeAdd_ff2;
-	//wire [IMM_DATA_WIDTH-1:0]immData;
-	//wire isLoad;
+	wire isLoad;
 	wire [2:0]opcodeAlu;
-	//wire [DATA_WIDTH-1:0]data1,data2;
-	wire [DATA_WIDTH-1:0]muxOut;
-	//wire [DATA_WIDTH-1:0]aluresult_ff1;
+	wire [DATAWIDTH-1:0]data1,data2;
+	wire [DATAWIDTH-1:0]muxOut;
+	wire [DATAWIDTH-1:0]aluresult_ff1;
 	
 	
-	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
+	program_memory #(.DATA_WIDTH=8, .ADD_WIDTH=7)
 	program_memory_inst1(.clk(clk),
 						 .wrEn(pmWrEn),
 						 .readAdd(pointer),
@@ -79,7 +74,7 @@ module pipelined_risc_v_cpu  #(
 	
 	fetch_stage #(.WIDTH(32)) 
 	fetch_stage_inst3(.clk(clk), 
-					  .current_ins(instruction_w),
+					  .current_ins(instruction),
 					  .next_ins(next_ins_w));
 		
 	decode_stage #(.WIDTH(8)) 
@@ -90,7 +85,7 @@ module pipelined_risc_v_cpu  #(
 					  .func3(next_ins_w[14:12]), 
 					  .func7(next_ins_w[31:25]), 
 					  .opcode(next_ins_w[6:0]), 
-					  .immediate_data(instruction_w[31:24]), 
+					  .immediate_data(instruction[27:20]), 
 					  .r_reg1_out(r_reg1_out), 
 					  .r_reg2_out(r_reg2_out), 
 					  .wr_reg_out(wr_reg_dec_w), 
@@ -153,7 +148,7 @@ module pipelined_risc_v_cpu  #(
   
 	writeback_stage #(.WIDTH(8)) 
 	writeback_stage_inst(.clk(clk),
-			     .reg_wen(reg_wen_w),
+						 .reg_wen(reg_wen_w),
 						 .wr_reg(wr_reg_dec_w),
 						 .alu_result(alu_result_w),
 						 .reg_wen_out(reg_wen_wb_w),
