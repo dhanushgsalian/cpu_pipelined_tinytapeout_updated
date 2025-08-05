@@ -91,7 +91,7 @@ module pipelined_risc_v_cpu  #(
 					  .func3(next_ins_w[14:12]), 
 					  .func7(next_ins_w[31:25]), 
 					  .opcode(next_ins_w[6:0]), 
-					  .immediate_data(instruction_w[31:24]), 
+			  		  .immediate_data(instruction_w[28:20]), 
 					  .r_reg1_out(r_reg1_out), 
 					  .r_reg2_out(r_reg2_out), 
 					  .wr_reg_out(wr_reg_dec_w), 
