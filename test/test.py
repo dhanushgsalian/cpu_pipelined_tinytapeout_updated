@@ -51,7 +51,7 @@ async def test_project(dut):
     dut._log.info("Start execution")
 
     # Wait 1-3 cycles for execution
-    await ClockCycles(dut.clk, 4)
+    await ClockCycles(dut.clk, 6)
 
     # Check the output (should be sum of R1 and R2)
     expected_output = 20  # Since R1 = 8, R2 = 12  → R3 = R1 + R2 = 20
