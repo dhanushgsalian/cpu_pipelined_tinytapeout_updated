@@ -26,7 +26,7 @@ project:
     - "register_bank.v"
     - "data_forward.v"
     - "mux_2_1.v"
-    - "alu_unit.v"
+    - "alu.v"
     - "writeback_stage.v"
     - "pipelined_risc_v_cpu.v"
 
