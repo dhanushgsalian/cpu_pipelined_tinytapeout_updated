@@ -9,12 +9,12 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+This CPU excutes the instruction set which is givein the Program memory and It is a pipelined 4 stage CPU
 
 ## How to test
 
-Explain how to use your project
+By driving the Clk, Reset and giving the address and insturction to Program memory
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+No
