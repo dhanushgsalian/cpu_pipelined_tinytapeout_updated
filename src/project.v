@@ -21,7 +21,7 @@ module tt_um_pipelined_risc_v_cpu (
   wire [7:0]alu_result;
   assign uio_out = 0;
   assign uio_oe  = 8'b0000_0000;
-  assign uo_out = aluresult[7:0];
+  assign uo_out = alu_result[7:0];
   pipelined_risc_v_cpu #(.DATA_WIDTH(32), .ADD_WIDTH(7), .REGADD(5), .WIDTH(8)) 
   top (.clk(clk),.rst(rst_n),.pmWrEn(uio_in[7]),.instructionIn(ui_in),.pm_addr(uio_in[6:0]),.alu_result(alu_result));
 	
