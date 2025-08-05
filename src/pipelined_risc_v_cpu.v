@@ -108,7 +108,7 @@ module pipelined_risc_v_cpu  #(
 					  .alu_op(alu_op_w));
 
 
-	reg_bank #(.DEPTH(32), .WIDTH(8), .ADD_WIDTH(5)) 
+	register_bank #(.DEPTH(32), .WIDTH(8), .ADD_WIDTH(5)) 
 	reg_bank_inst(.clk(clk), 
 				  .w_en(reg_wen_wb_w),
 				  .r_reg1(r_reg1_out),
