@@ -1,7 +1,6 @@
 module pipelined_risc_v_cpu  #(
 	parameter 	DATA_WIDTH = 32,
 				ADD_WIDTH=7,
-				REGADD=5,
 				WIDTH = 8
 	)(
 	input clk,rst,
@@ -55,11 +54,6 @@ module pipelined_risc_v_cpu  #(
 	//data forward mux
 	wire [WIDTH-1:0] mux_out_op1;
 	wire [WIDTH-1:0] mux_out_op2;
-  
-	//wire isLoad;
-	wire [2:0]opcodeAlu;
-	wire [DATA_WIDTH-1:0]muxOut;
-
 	
 	
 	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
@@ -126,13 +120,13 @@ module pipelined_risc_v_cpu  #(
 		
 	mux_2_1 #(.WIDTH(7)) 
 	op1_select_inst(.i0(read_data1_w), 
-					.i1(alu_result_wb_w[7:0]),
+					.i1(alu_result_wb_w[6:0]),
 					.sel(op1_select), 
 					.mux_out(mux_out_op1));
 	 
 	mux_2_1 #(.WIDTH(7)) 
 	op2_select_inst (.i0(read_data2_w), 
-					 .i1(alu_result_wb_w[7:0]),
+					 .i1(alu_result_wb_w[6:0]),
 					 .sel(op2_select),
 					 .mux_out(mux_out_op2));
 	 
