@@ -38,27 +38,31 @@ module pipelined_risc_v_cpu  #(
     wire [7:0] alu_result_w;
 	//writeback stage
 	wire reg_wen_wb_w;
+	
 	//wire data_wb_sel_wb_w;
 	wire [4:0] wr_reg_wb_w;
+	
 	//wire [WIDTH-1:0] immediate_data_wb_w;
 	wire [7:0] alu_result_wb_w;
+	
 	//immediate data select mux
 	wire [WIDTH-1:0] mux_out_w;
+	
 	//data forward
 	wire op1_select;
 	wire op2_select;
+	
 	//data forward mux
 	wire [WIDTH-1:0] mux_out_op1;
 	wire [WIDTH-1:0] mux_out_op2;
   
-	wire isLoad;
+	//wire isLoad;
 	wire [2:0]opcodeAlu;
-	wire [DATAWIDTH-1:0]data1,data2;
-	wire [DATAWIDTH-1:0]muxOut;
-	wire [DATAWIDTH-1:0]aluresult_ff1;
+	wire [DATA_WIDTH-1:0]muxOut;
+
 	
 	
-	program_memory #(.DATA_WIDTH=8, .ADD_WIDTH=7)
+	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
 	program_memory_inst1(.clk(clk),
 						 .wrEn(pmWrEn),
 						 .readAdd(pointer),
