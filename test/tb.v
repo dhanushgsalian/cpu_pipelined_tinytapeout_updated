@@ -5,7 +5,7 @@
 `include "fetch_stage.v"
 `include "decode_stage.v"
 `include "control_unit.v"
-`include "reg_bank.v"
+`include "register_bank.v"
 `include "data_forward.v"
 `include "mux_2_1.v"
 `include "alu.v"
