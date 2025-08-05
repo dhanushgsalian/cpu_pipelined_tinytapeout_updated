@@ -15,12 +15,16 @@ module tt_um_example (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-
+    
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+  //assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+  wire [7:0]alu_result;
   assign uio_out = 0;
-  assign uio_oe  = 0;
-
+  assign uio_oe  = 8'b0000_0000;
+  assign uo_out = aluresult[7:0];
+  top_cpu #(.DATAWIDTH(32),.ADDWIDTH(7),.REGADD(5),.IMM_DATA_WIDTH(20)
+           ) top (.clk(clk),.rst(rst_n),.pmWrEn(uio_in[7]),.instructionIn(ui_in),.pm_addr(uio_in[6:0]),.alu_result(alu_result));
+	
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, clk, rst_n, 1'b0};
 
