@@ -144,7 +144,7 @@ module pipelined_risc_v_cpu  #(
 					   .mux_out(mux_out_w));
 				  
 				  
-	alu #(.WIDTH(7), .OP_WIDTH(3)) 
+	alu #(.WIDTH(8), .OP_WIDTH(3)) 
 	alu_inst(.alu_op(alu_op_w),
 			 .op1(mux_out_op1),
 			 .op2(mux_out_w),
