@@ -18,6 +18,6 @@ module program_counter #(parameter WIDTH = 32)(clk, rst, pc_scr,current_ins_add)
 	 end
   end
 
-	assign next_ins_add = current_ins_add[WIDTH-1:0] + 1'b1; //increments the pc value by one or used to compute the next instruction
+	assign next_ins_add = current_ins_add[WIDTH-1:0] + 3'b100; //increments the pc value by one or used to compute the next instruction
 
 endmodule
