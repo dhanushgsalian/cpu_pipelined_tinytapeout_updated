@@ -19,7 +19,7 @@ async def test_project(dut):
     dut.rst_n.value = 0
     dut.uio_in.value = 0  # Write enable low initially
     dut.ui_in.value = 0   # No instruction initially
-    await ClockCycles(dut.clk, 10)  # Wait 10 cycles during reset
+    await ClockCycles(dut.clk, 20)  # Wait 10 cycles during reset
     #dut.rst_n.value = 1  # Deassert reset
 
     # Enable write (pmWrEn)
