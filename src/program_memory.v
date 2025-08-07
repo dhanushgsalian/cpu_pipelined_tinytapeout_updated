@@ -1,6 +1,6 @@
 module program_memory
 	#(parameter DATA_WIDTH=8,
-		    ADD_WIDTH=7)
+				ADD_WIDTH=7)
 	(input clk,
 	 input wrEn,
 	 input [ADD_WIDTH-1:0]readAdd,writeAdd,
