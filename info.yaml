@@ -22,6 +22,7 @@ project:
     - "program_memory.v"
     - "fetch_stage.v"
     - "decode_stage.v"
+    - "d_ff.v"
     - "control_unit.v"
     - "register_bank.v"
     - "data_forward.v"
