@@ -32,6 +32,7 @@ module pipelined_risc_v_cpu  #(
 	wire [4:0] wr_reg_dec_w;
 	wire [6:0] func7_out;
 	wire [6:0] opcode_out;
+	wire [6:0] opcode_out_reg;
 	wire [WIDTH-1:0] immediate_data_dec_w;
   
     wire [7:0] alu_result_w;
@@ -58,6 +59,9 @@ module pipelined_risc_v_cpu  #(
 	wire [WIDTH-1:0] output_data;
 	wire [WIDTH-1:0] alu_reset_output;
 	
+	// jump instruction
+	wire [6:0] jump_add_wire;
+	
 	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
 	program_memory_inst1(.clk(clk),
 						 .wrEn(pmWrEn),
@@ -70,6 +74,7 @@ module pipelined_risc_v_cpu  #(
 	program_counter_inst2(.clk(clk),
 						  .rst(rst),
 						  .pc_scr(instruction[6:0]),
+						  .jump_add(instruction[31:25]),
 						  .current_ins_add(pointer));
 	
 	fetch_stage #(.WIDTH(32)) 
@@ -78,7 +83,7 @@ module pipelined_risc_v_cpu  #(
 					  .next_ins(next_ins_w));
 		
 	decode_stage #(.WIDTH(8)) 
-	decode_stage_inst(.clk(clk), 
+	decode_stage_inst(.clk(clk),
 					  .r_reg1(next_ins_w[19:15]), 
 					  .r_reg2(next_ins_w[24:20]), 
 					  .wr_reg(next_ins_w[11:7]), 
@@ -93,6 +98,12 @@ module pipelined_risc_v_cpu  #(
 					  .func3_out(func3_out), 
 					  .func7_out(func7_out), 
 					  .opcode_out(opcode_out));
+					  
+	d_ff #(.WIDTH(7)) 
+	dff (.clk(clk),
+         .rst(rst),
+         .d(opcode_out),
+         .q(opcode_out_reg));
 	
 	control_unit #(.OP_WIDTH(7)) 
 	control_unit_inst(.func3(func3_out), 
@@ -121,19 +132,19 @@ module pipelined_risc_v_cpu  #(
 					  .op1_select(op1_select), 
 					  .op2_select(op2_select));
 		
-	mux_2_1 #(.WIDTH(7)) 
+	mux_2_1 #(.WIDTH(8)) 
 	op1_select_inst(.i0(read_data1_w), 
-					.i1(alu_result_wb_w[6:0]),
+					.i1(alu_result_wb_w),
 					.sel(op1_select), 
 					.mux_out(mux_out_op1));
 	 
-	mux_2_1 #(.WIDTH(7)) 
+	mux_2_1 #(.WIDTH(8)) 
 	op2_select_inst (.i0(read_data2_w), 
-					 .i1(alu_result_wb_w[6:0]),
+					 .i1(alu_result_wb_w),
 					 .sel(op2_select),
 					 .mux_out(mux_out_op2));
 	 
-	mux_2_1 #(.WIDTH(7)) 
+	mux_2_1 #(.WIDTH(8)) 
 	data_store_sel_mux(.i0(mux_out_op2),
 					   .i1(immediate_data_dec_w),
 					   .sel(data_imm_sel_w),
@@ -142,10 +153,10 @@ module pipelined_risc_v_cpu  #(
 	mux_2_1 #(.WIDTH(8)) 
 	alu_output_sel_mux(.i0(alu_result_wb_w),
 					   .i1(output_data),
-					   .sel(&opcode_out),
+					   .sel(&opcode_out_reg),
 					   .mux_out(alu_reset_output));
 				  
-	alu #(.WIDTH(7), .OP_WIDTH(3)) 
+	alu #(.WIDTH(8), .OP_WIDTH(3)) 
 	alu_inst(.alu_op(alu_op_w),
 			 .op1(mux_out_op1),
 			 .op2(mux_out_w),
