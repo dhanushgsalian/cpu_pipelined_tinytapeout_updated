@@ -7,7 +7,7 @@ module d_ff #(
     output reg  [WIDTH-1:0]     q     // Output
 );
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk or negedge rst) begin
         if (!rst)
             q <= {WIDTH{1'b0}}; // Reset all bits to 0
         else
