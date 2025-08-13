@@ -4,6 +4,7 @@
 `include "program_memory.v"
 `include "fetch_stage.v"
 `include "decode_stage.v"
+`include "d_ff.v"
 `include "control_unit.v"
 `include "register_bank.v"
 `include "data_forward.v"
