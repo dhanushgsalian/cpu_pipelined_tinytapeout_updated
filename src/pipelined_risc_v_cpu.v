@@ -18,7 +18,7 @@ module pipelined_risc_v_cpu  #(
   //control unit
   wire reg_wen_w;
   wire data_imm_sel_w;
-  wire [2:0] alu_op_w;
+  wire [3:0] alu_op_w;
   //register bank
   wire [WIDTH-1:0] read_data1_w;
   wire [WIDTH-1:0] read_data2_w;
@@ -60,7 +60,7 @@ module pipelined_risc_v_cpu  #(
 	wire [WIDTH-1:0] alu_reset_output;
 	
 	// jump instruction
-	wire [6:0] jump_add_wire;
+	//wire [6:0] jump_add_wire;
 	
 	program_memory #(.DATA_WIDTH(8), .ADD_WIDTH(7))
 	program_memory_inst1(.clk(clk),
@@ -73,6 +73,7 @@ module pipelined_risc_v_cpu  #(
 	program_counter #(.WIDTH(ADD_WIDTH))
 	program_counter_inst2(.clk(clk),
 						  .rst(rst),
+						  .condition(alu_result_w[0]),
 						  .pc_scr(instruction[6:0]),
 						  .jump_add(instruction[31:25]),
 						  .current_ins_add(pointer));
@@ -98,13 +99,13 @@ module pipelined_risc_v_cpu  #(
 					  .func3_out(func3_out), 
 					  .func7_out(func7_out), 
 					  .opcode_out(opcode_out));
-					  
+         
 	d_ff #(.WIDTH(7)) 
 	dff (.clk(clk),
          .rst(rst),
          .d(opcode_out),
          .q(opcode_out_reg));
-	
+		
 	control_unit #(.OP_WIDTH(7)) 
 	control_unit_inst(.func3(func3_out), 
 					  .func7(func7_out),
@@ -112,7 +113,6 @@ module pipelined_risc_v_cpu  #(
 					  .reg_wen(reg_wen_w),
 					  .data_imm_sel(data_imm_sel_w),
 					  .alu_op(alu_op_w));
-
 
 	register_bank #(.DEPTH(32), .WIDTH(8), .ADD_WIDTH(5)) 
 	reg_bank_inst(.clk(clk), 
@@ -156,7 +156,7 @@ module pipelined_risc_v_cpu  #(
 					   .sel(&opcode_out_reg),
 					   .mux_out(alu_reset_output));
 				  
-	alu #(.WIDTH(8), .OP_WIDTH(3)) 
+	alu #(.WIDTH(8), .OP_WIDTH(4)) 
 	alu_inst(.alu_op(alu_op_w),
 			 .op1(mux_out_op1),
 			 .op2(mux_out_w),
