@@ -73,8 +73,9 @@ module pipelined_risc_v_cpu  #(
 	program_counter #(.WIDTH(ADD_WIDTH))
 	program_counter_inst2(.clk(clk),
 						  .rst(rst),
-						  .condition(alu_result_w[0]),
+						  .condition(|alu_result_w),
 						  .pc_scr(instruction[6:0]),
+						  .function_3(instruction[14:12]),
 						  .jump_add(instruction[31:25]),
 						  .current_ins_add(pointer));
 	
@@ -91,7 +92,7 @@ module pipelined_risc_v_cpu  #(
 					  .func3(next_ins_w[14:12]), 
 					  .func7(next_ins_w[31:25]), 
 					  .opcode(next_ins_w[6:0]), 
-					  .immediate_data(instruction[27:20]), 
+					  .immediate_data(instruction[31:24]), 
 					  .r_reg1_out(r_reg1_out), 
 					  .r_reg2_out(r_reg2_out), 
 					  .wr_reg_out(wr_reg_dec_w), 
