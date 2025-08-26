@@ -1,7 +1,8 @@
-module program_counter #(parameter WIDTH = 32)(clk, rst, condition, pc_scr, jump_add,current_ins_add);//this module compute next instruction address
+module program_counter #(parameter WIDTH = 32)(clk, rst, condition, pc_scr, function_3, jump_add,current_ins_add);//this module compute next instruction address
   input clk;
   input rst;
   input condition;
+  input [2:0] function_3;
   input [6:0] pc_scr;
   input [6:0] jump_add;
   output reg [WIDTH-1:0] current_ins_add = {WIDTH{1'b0}};
@@ -19,10 +20,20 @@ module program_counter #(parameter WIDTH = 32)(clk, rst, condition, pc_scr, jump
         current_ins_add <= jump_add;
      end
      else if(pc_scr == 7'b110_0011) begin
-        if(condition)
-            current_ins_add <= jump_add;
-        else
-            current_ins_add <= next_ins_add;       
+        if(function_3 == 3'b000) begin
+            if(condition)
+                current_ins_add <= jump_add;
+            else
+                current_ins_add <= next_ins_add;
+        end
+        else if (function_3 == 3'b001) begin
+            if(condition != 0)
+                current_ins_add <= jump_add;
+            else
+                current_ins_add <= next_ins_add;
+        end 
+        else 
+            current_ins_add <= next_ins_add;
      end
 	 else begin
 		current_ins_add <= next_ins_add;
