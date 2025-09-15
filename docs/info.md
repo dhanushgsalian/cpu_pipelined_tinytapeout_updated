@@ -53,9 +53,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **ADD**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 000 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| ADD | 0000000 | 01001 | 01000 | 000 | 00110 | 0110011 |
 
 `Reg (RD) = RS1 + RS2`
 
@@ -63,9 +63,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **SUB**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0100000 | 01011 | 01000 | 000 | 00100 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| SUB | 0100000 | 01011 | 01000 | 000 | 00100 | 0110011 |
 
 `Reg (RD) = RS1 - RS2`
 
@@ -75,9 +75,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **AND**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 111 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| AND | 0000000 | 01001 | 01000 | 111 | 00110 | 0110011 |
 
 `Reg (RD) = RS1 & RS2`
 
@@ -85,9 +85,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **OR**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 110 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| OR | 0000000 | 01001 | 01000 | 110 | 00110 | 0110011 |
 
 `Reg (RD) = RS1 | RS2`
 
@@ -95,9 +95,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **NOT**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0100000 | 01001 | 01000 | 111 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| NOT | 0100000 | 01001 | 01000 | 111 | 00110 | 0110011 |
 
 `Reg (RD) = ~ (RS1)`
 
@@ -105,9 +105,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **XOR**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 100 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| XOR | 0000000 | 01001 | 01000 | 100 | 00110 | 0110011 |
 
 `Reg (RD) = RS1 ^ RS2`
 
@@ -117,9 +117,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **CMP**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 010 | 00110 | 0110011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| CMP | 0000000 | 01001 | 01000 | 010 | 00110 | 0110011 |
 
 `Reg (RD) = RS1 > RS2`
 
@@ -127,9 +127,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **EQ**
 
-| FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
-|-------|-----|-----|-------|----|--------|
-| 0000000 | 01001 | 01000 | 000 | 00110 | 1100011 |
+| OPERATION | FUNC7 | RS2 | RS1 | FUNC3 | RD | OPCODE |
+|-----------|-------|-----|-----|-------|----|--------|
+| EQ | 0000000 | 01001 | 01000 | 000 | 00110 | 1100011 |
 
 `Reg (RD) = RS1 == RS2`
 
@@ -139,9 +139,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **JUMP**
 
-| Direct_Add (7 BITS) | OPCODE (7 BITS) |
-|---------------------|----------------|
-| 001_0100 | 110_1111 |
+| OPERATION | Direct_Add (7 BITS) | OPCODE (7 BITS) |
+|-----------|---------------------|----------------|
+| JUMP | 001_0100 | 110_1111 |
 
 `PC = PROG[ADDR]`  
 (Direct_Add - Starting from MSB 7 bits)
@@ -150,9 +150,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **JUMP_IF**
 
-| Direct_Add (7 BITS) | FUNC3 (3 BITS) | RS1 (5 BITS) | OPCODE (7 BITS) |
-|---------------------|---------------|-------------|----------------|
-| 001_0100 | 000 | 01000 | 110_0011 |
+| OPERATION | Direct_Add (7 BITS) | FUNC3 (3 BITS) | RS1 (5 BITS) | OPCODE (7 BITS) |
+|-----------|---------------------|---------------|-------------|----------------|
+| JUMP_IF | 001_0100 | 000 | 01000 | 110_0011 |
 
 `If REG, Then PC = PROG[ADDR]`
 
@@ -160,9 +160,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **JUMP_IF_NOT_EQUAL**
 
-| Direct_Add (7 BITS) | FUNC3 (3 BITS) | RS1 (5 BITS) | OPCODE (7 BITS) |
-|---------------------|---------------|-------------|----------------|
-| 001_0100 | 001 | 01000 | 110_0011 |
+| OPERATION | Direct_Add (7 BITS) | FUNC3 (3 BITS) | RS1 (5 BITS) | OPCODE (7 BITS) |
+|-------------|---------------------|---------------|-------------|----------------|
+| JUMP_IF_NOT | 001_0100 | 001 | 01000 | 110_0011 |
 
 `If !REG, Then PC = PROG[ADDR]`
 
@@ -170,9 +170,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **NOP**
 
-| OPCODE (7 BITS) |
-|----------------|
-| 0000000 |
+| OPERATION | OPCODE (7 BITS) |
+|-----------|----------------|
+| NOP | 0000000 |
 
 `No operation`
 
@@ -180,9 +180,9 @@ You can also include images in this folder and reference them in the markdown. E
 
 **HALT**
 
-| OPCODE (7 BITS) |
-|----------------|
-| 1111111 |
+| OPERATION | OPCODE (7 BITS) |
+|-----------|----------------|
+| HALT | 1111111 |
 
 `End of the program.`
 
