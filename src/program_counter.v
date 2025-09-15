@@ -27,7 +27,7 @@ module program_counter #(parameter WIDTH = 32)(clk, rst, condition, pc_scr, func
                 current_ins_add <= next_ins_add;
         end
         else if (function_3 == 3'b001) begin
-            if(condition != 0)
+			if(condition == 0)
                 current_ins_add <= jump_add;
             else
                 current_ins_add <= next_ins_add;
